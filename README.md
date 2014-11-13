@@ -28,6 +28,8 @@ None so far
 x_1
 try(x_1 <- "hello world!")
 ## --> ignored with error
+x_1 <- 20
+## --> overwritten
 ```
 
 ## Levels of strictness 
