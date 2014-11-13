@@ -1,3 +1,19 @@
+# CHANGES IN typr VERSION 0.2.1
+
+## NEW FEATURES
+
+- added: `...` to `validateType()`
+
+## BUG FIXES
+
+## MAJOR CHANGES
+
+## MINOR CHANGES
+
+## MISC
+
+-----
+
 # CHANGES IN typr VERSION 0.2
 
 ## NEW FEATURES

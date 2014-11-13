@@ -55,7 +55,8 @@ validateType <- function(
   numint = TRUE,
   from_null = TRUE,
   to_null = TRUE,
-  strict = c(2, 1, 0)
+  strict = c(2, 1, 0),
+  ...
 ) {
   
   out <- TRUE
