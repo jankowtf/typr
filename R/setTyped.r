@@ -57,7 +57,7 @@
 #'    See section \emph{Referenced environments}.
 #' @example inst/examples/setTyped.r
 #' @seealso \code{
-#'     \link[reactr]{setReactive}
+#'     \link[base]{makeActiveBinding}
 #' }
 #' @template author
 #' @template references

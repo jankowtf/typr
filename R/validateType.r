@@ -2,7 +2,7 @@
 #' Validate Type (S3)
 #'
 #' @description 
-#' Validates type of an assignment value for a typed object value.
+#' Validates type (class) of an assignment value for a typed object value.
 #' 
 #' @details
 #' The type (class) of the object value as stored at the initial assignment

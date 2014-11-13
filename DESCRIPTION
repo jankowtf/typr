@@ -1,4 +1,4 @@
-Package: nestr
+Package: typr
 Type: Package
 Title: Implicitly typed objects
 Version: 0.1
@@ -11,4 +11,5 @@ Roxygen: list(wrap = FALSE)
 NeedsCompilation: no
 Repository: CRAN
 Imports:
-    conditionr
+    conditionr,
+    digest

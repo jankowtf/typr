@@ -4,7 +4,7 @@
 #' @description
 #' The package allows to create implicitly typed objects.
 #' 
-#' @section: Core function(s) 
+#' @section Core function(s):
 #' 
 #'  \itemize{
 #'    \item{\code{\link[typr]{setTyped}}: }{
