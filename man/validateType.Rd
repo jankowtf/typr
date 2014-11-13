@@ -4,7 +4,7 @@
 \title{Validate Type (S3)}
 \usage{
 validateType(self, value, numint = TRUE, from_null = TRUE, to_null = TRUE,
-  strict = c(2, 1, 0))
+  strict = c(2, 1, 0), ...)
 }
 \arguments{
 \item{self}{\code{\link{environment}}.
