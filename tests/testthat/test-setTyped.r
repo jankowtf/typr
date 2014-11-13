@@ -99,6 +99,37 @@ test_that("setTyped/inheritance", {
   
   expect_is(setTyped(id = "x_1", value, numint = FALSE), "numeric")
   expect_error(x_1 <- as.integer(10))
-  expect_equal(x_1, 10)
+  expect_false(identical(x_1, 10))
+  
+})
+
+##------------------------------------------------------------------------------
+context("setTyped/invisible")
+##------------------------------------------------------------------------------
+
+test_that("setTyped/invisible/once", {
+
+  expect_is(res <- setTyped(id = "x_1", 10, return_invis = 1), 
+    "InvisibleObject")
+  expect_equal(res$.value, 10)
+  expect_true(exists(".id", envir = res, inherits = FALSE))
+  expect_true(exists(".uid", envir = res, inherits = FALSE))
+  expect_true(exists(".class", envir = res, inherits = FALSE))
+  expect_true(exists(".where", envir = res, inherits = FALSE))
+  expect_true(exists(".validateType", envir = res, inherits = FALSE))
+  
+})
+
+test_that("setTyped/invisible/always", {
+
+  expect_is(res <- setTyped(id = "x_1", 10, return_invis = 2), 
+    "InvisibleObject")
+  expect_is(x_1, "InvisibleObject")
+  expect_equal(x_1, res)
+  expect_true(exists(".id", envir = x_1, inherits = FALSE))
+  expect_true(exists(".uid", envir = x_1, inherits = FALSE))
+  expect_true(exists(".class", envir = x_1, inherits = FALSE))
+  expect_true(exists(".where", envir = x_1, inherits = FALSE))
+  expect_true(exists(".validateType", envir = x_1, inherits = FALSE))
   
 })

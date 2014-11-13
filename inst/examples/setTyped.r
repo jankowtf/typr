@@ -139,4 +139,32 @@ try(x_1 <- as.integer(10))
 ## a valid type (class)
 x_1
 
+##------------------------------------------------------------------------------
+## Return invisible //
+##------------------------------------------------------------------------------
+
+## Return once only //
+(res <- setTyped(id = "x_1", 10, return_invis = 1))
+## --> return value is `InvisibleObject`
+x_1
+## --> but `x_1` has value `10`
+res$.value
+ls(res, all.names = TRUE)
+exists(".id", envir = res, inherits = FALSE)
+exists(".uid", envir = res, inherits = FALSE)
+exists(".class", envir = res, inherits = FALSE)
+exists(".where", envir = res, inherits = FALSE)
+exists(".validateType", envir = res, inherits = FALSE)
+
+## Return always //
+(res <- setTyped(id = "x_1", 10, return_invis = 2))
+identical(x_1, res)
+## --> invisible object is now also assigned to `x_1`
+
+exists(".id", envir = x_1, inherits = FALSE)
+exists(".uid", envir = x_1, inherits = FALSE)
+exists(".class", envir = x_1, inherits = FALSE)
+exists(".where", envir = x_1, inherits = FALSE)
+exists(".validateType", envir = x_1, inherits = FALSE)
+
 }

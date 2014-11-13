@@ -4,8 +4,8 @@
 \title{Set Typed Object Value (S3)}
 \usage{
 setTyped(id, value = NULL, where = parent.frame(), numint = TRUE,
-  from_null = TRUE, to_null = TRUE, inherit = FALSE, strict = c(2, 1,
-  0), ...)
+  from_null = TRUE, to_null = TRUE, inherit = FALSE, return_invis = c(0,
+  1, 2), strict = c(2, 1, 0), ...)
 }
 \arguments{
 \item{id}{\code{\link{character}}.
@@ -44,6 +44,16 @@ class \code{TypedObject};
 \code{FALSE}: class table not altered.
 Default: \code{FALSE} to provide maximum amount of compatibality with
 S3 method dispatch.}
+
+\item{return_invis}{\code{\link{numeric}}.
+Controls the actual return value
+\itemize{
+  \item{\code{0}: } {return visible object part only}
+  \item{\code{1}: } {return invisible object as return value of
+    \code{\link[typr]{setTyped}}}
+  \item{\code{2}: } {return invisible object for each subsequent
+    \emph{assignment} or \emph{get} operation}
+}}
 
 \item{strict}{\code{\link{numeric}}.
 Relevant if assigning an explicit value to an object with reactive
@@ -212,6 +222,34 @@ try(x_1 <- as.integer(10))
 ## --> note the information that any of {`MyNumeric`, `numeric`} would be 
 ## a valid type (class)
 x_1
+
+##------------------------------------------------------------------------------
+## Return invisible //
+##------------------------------------------------------------------------------
+
+## Return once only //
+(res <- setTyped(id = "x_1", 10, return_invis = 1))
+## --> return value is `InvisibleObject`
+x_1
+## --> but `x_1` has value `10`
+res$.value
+ls(res, all.names = TRUE)
+exists(".id", envir = res, inherits = FALSE)
+exists(".uid", envir = res, inherits = FALSE)
+exists(".class", envir = res, inherits = FALSE)
+exists(".where", envir = res, inherits = FALSE)
+exists(".validateType", envir = res, inherits = FALSE)
+
+## Return always //
+(res <- setTyped(id = "x_1", 10, return_invis = 2))
+identical(x_1, res)
+## --> invisible object is now also assigned to `x_1`
+
+exists(".id", envir = x_1, inherits = FALSE)
+exists(".uid", envir = x_1, inherits = FALSE)
+exists(".class", envir = x_1, inherits = FALSE)
+exists(".where", envir = x_1, inherits = FALSE)
+exists(".validateType", envir = x_1, inherits = FALSE)
 
 }
 }
