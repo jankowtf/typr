@@ -42,6 +42,15 @@
 #' 		\code{FALSE}: this would be regarded as a type (class) mismatch.
 #' 		Default: \code{TRUE} as this seems to make most sense in practical 
 #' 		applications.
+#' @param return_invis \code{\link{numeric}}.
+#'    Controls the actual return value
+#'    \itemize{
+#'      \item{\code{0}: } {return visible object part only}
+#'      \item{\code{1}: } {return invisible object as return value of 
+#'        \code{\link[typr]{setTyped}}}
+#'      \item{\code{2}: } {return invisible object for each subsequent 
+#'        \emph{assignment} or \emph{get} operation}
+#'    }
 #' @param strict \code{\link{numeric}}.
 #'    Relevant if assigning an explicit value to an object with reactive 
 #'    dependency on other objects.
@@ -72,6 +81,7 @@ setTyped <- function(
     from_null = TRUE,
     to_null = TRUE,
     inherit = FALSE,
+    return_invis = c(0, 1, 2),
     strict = c(2, 1, 0),
     ...
   ) {
@@ -80,21 +90,23 @@ setTyped <- function(
   ## Argument checks //
   strict <- as.numeric(match.arg(as.character(strict), 
     as.character(c(2, 1, 0))))
+  return_invis <- as.numeric(match.arg(as.character(return_invis), 
+    as.character(c(0, 1, 2))))
 
-  inv <- structure(new.env(parent = emptyenv()), 
+  invis <- structure(new.env(parent = emptyenv()), 
     class = c("InvisibleObject", "environment"))
-  inv$.id <- id
-  inv$.uid <- digest::digest(list(id = id, where = capture.output(where)))
-  inv$.class <- class(value)
-  inv$.where <- where
-#  inv$.value <- value
+  invis$.id <- id
+  invis$.uid <- digest::digest(list(id = id, where = capture.output(where)))
+  invis$.class <- class(value)
+  invis$.where <- where
+#  invis$.value <- value
   vis <- if (!inherit) {
     value
   } else {
-    structure(value, class = c("TypedObject", inv$.class))
+    structure(value, class = c("TypedObject", invis$.class))
   }
-  inv$.value <- vis
-  inv$.validateType <- validateType
+  invis$.value <- vis
+  invis$.validateType <- validateType
 
   ## Handle already-in-place regular bindings //
   has_binding <- try(bindingIsActive(id, where), silent = TRUE)
@@ -109,21 +121,29 @@ setTyped <- function(
   makeActiveBinding(id, env = where, 
     fun = function(v) {
       if (missing(v)) {
-        inv$.value
+#         invis$.value
       } else {
-        if (inv$.validateType(self = inv, value = v, numint = numint, 
+        if (invis$.validateType(self = invis, value = v, numint = numint, 
             from_null = from_null, to_null = to_null, strict = strict)) {
-          inv$.value <- if (!inherit) {
+          invis$.value <- if (!inherit) {
             v
           } else {
-            structure(v, class = c("TypedObject", inv$.class))
+            structure(v, class = c("TypedObject", invis$.class))
           }
         }
-        inv$.value
+      }
+      if (return_invis == 2) {
+        invis
+      } else {
+        invis$.value  
       }
     }
   )
 
-  invisible(vis)  
+  if (return_invis %in% 1:2) {
+    invisible(invis)
+  } else {
+    invisible(vis)  
+  }
 }
 
