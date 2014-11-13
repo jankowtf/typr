@@ -1,8 +1,8 @@
 Package: typr
 Type: Package
 Title: Implicitly typed objects
-Version: 0.1
-Date: 2014-11-13 03:12:18
+Version: 0.2
+Date: 2014-11-13 22:13:06
 Author: Janko Thyson [aut, cre]
 Maintainer: Janko Thyson <janko.thyson@gmail.com>
 Description: The package allows to create implicitly typed objects.
@@ -10,6 +10,4 @@ License: GPL (>= 2)
 Roxygen: list(wrap = FALSE)
 NeedsCompilation: no
 Repository: CRAN
-Imports:
-    conditionr,
-    digest
+Imports: conditionr, digest
