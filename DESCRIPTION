@@ -1,8 +1,8 @@
 Package: typr
 Type: Package
 Title: Implicitly typed objects
-Version: 0.2.1
-Date: 2014-11-13 22:31:04
+Version: 0.2.2
+Date: 2014-11-14 22:56:13
 Author: Janko Thyson [aut, cre]
 Maintainer: Janko Thyson <janko.thyson@gmail.com>
 Description: The package allows to create implicitly typed objects.
