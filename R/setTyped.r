@@ -109,13 +109,18 @@ setTyped <- function(
   invis$.validateType <- validateType
 
   ## Handle already-in-place regular bindings //
-  has_binding <- try(bindingIsActive(id, where), silent = TRUE)
-  if (inherits(has_binding, "try-error")){
-    has_binding <- FALSE
-  }
-  if (exists(id, envir = where, inherits = FALSE) && has_binding) {
+#   has_binding <- try(bindingIsActive(id, where), silent = TRUE)
+#   if (inherits(has_binding, "try-error")){
+#     has_binding <- FALSE
+#   }
+#   if (exists(id, envir = where, inherits = FALSE) && has_binding) {
+#     rm(list = id, envir = where, inherits = FALSE)
+#   }
+## --> keep as reference
+  if (exists(id, envir = where, inherits = FALSE)) {
     rm(list = id, envir = where, inherits = FALSE)
   }
+## --> fixes #1
 
   ## Call to 'makeActiveBinding' //
   makeActiveBinding(id, env = where, 

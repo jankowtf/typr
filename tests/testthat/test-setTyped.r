@@ -133,3 +133,14 @@ test_that("setTyped/invisible/always", {
   expect_true(exists(".validateType", envir = x_1, inherits = FALSE))
   
 })
+
+##------------------------------------------------------------------------------
+context("setTyped/already regular binding")
+##------------------------------------------------------------------------------
+
+test_that("setTyped/already regular binding", {
+
+  a <- 10
+  expect_equal(setTyped(id = "a", value = 10), 10)
+  
+})
